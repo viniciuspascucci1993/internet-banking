@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +33,9 @@ public class CorrentistaService {
         return new ExtratoCorrentistaDTO(entities);
     }
 
-    public ExtratoCorrentista depositarValor(Long id, String valorDeposito) {
+    public ExtratoCorrentista depositarValor(Long id, Double valorDeposito) {
         ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
-        if (Double.parseDouble(valorDeposito) > 0) {
+        if (valorDeposito > 0) {
             obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo().
                     add(new BigDecimal(valorDeposito)));
             obj.setDescricao("Seu deposito foi realizado com sucesso!");
@@ -46,23 +47,32 @@ public class CorrentistaService {
         return obj;
     }
 
-    public ExtratoCorrentista sacarValor(Long id, String valorDeSaque) {
+    public ExtratoCorrentista sacarValor(Long id, Double valorDeSaque) {
         ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
-        BigDecimal taxaQuatroPorCento
-                = new BigDecimal("0.4");
 
-        BigDecimal taxaUmPorCento
-                = new BigDecimal("1");
-        if (Double.parseDouble(valorDeSaque) <= 100.0) {
+        if (valorDeSaque <= 100.0) {
             obj.setDescricao("Isento de Taxa de Saque");
 
-        } else if (Double.parseDouble(valorDeSaque) > 100.00 && Double.parseDouble(valorDeSaque) <= 300.0) {
-            obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo().subtract(taxaQuatroPorCento));
+        } else if (valorDeSaque > 100.00 && valorDeSaque <= 300.0) {
+            BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
+            BigDecimal saldo = obj.getCorrentista().getSaldo();
+            BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(0.4));
+            percentual = percentual.setScale(2, RoundingMode.UP);
+            BigDecimal resultado = valorSaque.add(percentual);
+            resultado = saldo.subtract(resultado);
+            obj.getCorrentista().setSaldo(resultado);
             obj.setDescricao("Taxa de 0.4%");
 
-        } else if (Double.parseDouble(valorDeSaque) > 300.0 && Double.parseDouble(valorDeSaque) <= 1500.0) {
-            obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo().subtract(taxaQuatroPorCento));
+        } else if (valorDeSaque > 300.0 && valorDeSaque <= 1500.0) {
+            BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
+            BigDecimal saldo = obj.getCorrentista().getSaldo();
+            BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(1));
+            percentual = percentual.setScale(2, RoundingMode.UP);
+            BigDecimal resultado = valorSaque.add(percentual);
+            resultado = saldo.subtract(resultado);
+            obj.getCorrentista().setSaldo(resultado);
             obj.setDescricao("Taxa de 1%");
+
 
         } else if (obj.getCorrentista().getIsPlanoExclusive().equals(true)) {
             obj.setDescricao("Isento de Taxa de Saque");
