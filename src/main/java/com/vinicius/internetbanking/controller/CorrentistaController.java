@@ -19,7 +19,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/correntistas")
-@CrossOrigin(origins = "*")
 @Tag(name = "Internet Banking", description = "Simulação Internet Bankink")
 public class CorrentistaController {
 
