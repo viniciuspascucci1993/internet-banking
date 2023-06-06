@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/correntistas")
-@Tag(name = "Internet Banking", description = "Simulação Internet Bankink")
+@Tag(name = "Internet Banking", description = "Simulação Internet Banking")
 public class CorrentistaController {
 
     @Autowired
