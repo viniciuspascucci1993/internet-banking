@@ -7,18 +7,18 @@ public class MethodApplication {
 
     public static void main(String[] args) {
 
-        BigDecimal valorSaque = new BigDecimal(400);
-        BigDecimal saldo = new BigDecimal(14000);
+        BigDecimal valorSaque = new BigDecimal(20);
+        BigDecimal saldo = new BigDecimal(50);
 
         BigDecimal percentual =new BigDecimal(0);
 
-        if(valorSaque.intValue()>=300 && valorSaque.intValue() <= 1500) {
+        if(valorSaque.intValue()>=300) {
             percentual = saldo.divide(new BigDecimal(100)).multiply(new BigDecimal(1));
         }else {
             percentual = saldo.divide(new BigDecimal(100)).multiply(new BigDecimal(0.4));
         }
 
-        percentual = percentual.setScale(2, RoundingMode.UP);
+        percentual = percentual.setScale(2, RoundingMode.HALF_EVEN);
 
         System.out.println("O valor do impostoe é de "+percentual);
 

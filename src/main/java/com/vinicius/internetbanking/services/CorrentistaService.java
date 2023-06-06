@@ -57,7 +57,7 @@ public class CorrentistaService {
             BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
             BigDecimal saldo = obj.getCorrentista().getSaldo();
             BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(0.4));
-            percentual = percentual.setScale(2, RoundingMode.UP);
+            percentual = percentual.setScale(2, RoundingMode.HALF_EVEN);
             BigDecimal resultado = valorSaque.add(percentual);
             resultado = saldo.subtract(resultado);
             obj.getCorrentista().setSaldo(resultado);
@@ -67,7 +67,7 @@ public class CorrentistaService {
             BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
             BigDecimal saldo = obj.getCorrentista().getSaldo();
             BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(1));
-            percentual = percentual.setScale(2, RoundingMode.UP);
+            percentual = percentual.setScale(2, RoundingMode.HALF_EVEN);
             BigDecimal resultado = valorSaque.add(percentual);
             resultado = saldo.subtract(resultado);
             obj.getCorrentista().setSaldo(resultado);
