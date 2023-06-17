@@ -36,27 +36,6 @@ public class CorrentistaController {
     }
 
     @Operation(
-            summary = "Operação para retornar o extrato do correntista com o valor do deposito atualizado.",
-            description = "Operação que irá retornar uma lista de correntistas.")
-    @GetMapping("/depositarValor/{id}/{valorDeposito}")
-    public ResponseEntity<ExtratoCorrentista> depositarValor(@PathVariable("id") Long id,
-                                                             @PathVariable("valorDeposito") Double valorDeposito) {
-        ExtratoCorrentista extratoCorrentista = correntistaService.depositarValor(id, valorDeposito);
-        return ResponseEntity.ok(extratoCorrentista);
-    }
-
-    @Operation(
-            summary = "Operação para retornar o extrato do correntista com o valor do saque atualizado.",
-            description = "Operação que irá retornar uma lista de correntistas.")
-    @GetMapping("/sacarValor/{id}/{valorSaque}")
-    public ResponseEntity<ExtratoCorrentista> sacarValor(@PathVariable("id") Long id,
-                                                         @PathVariable("valorSaque") Double valorSaque) {
-        ExtratoCorrentista extratoCorrentista = correntistaService.sacarValor(id, valorSaque);
-        extratoCorrentista.getCorrentista().setIsPlanoExclusive(extratoCorrentista.getCorrentista().getIsPlanoExclusive());
-        return ResponseEntity.ok(extratoCorrentista);
-    }
-
-    @Operation(
             summary = "Operação para retornar correntista todos os correntistas.",
             description = "Operação que irá retornar uma lista de correntistas.")
     @GetMapping

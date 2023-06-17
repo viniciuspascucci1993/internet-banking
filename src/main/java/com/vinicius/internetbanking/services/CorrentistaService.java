@@ -33,56 +33,6 @@ public class CorrentistaService {
         return new ExtratoCorrentistaDTO(entities);
     }
 
-    public ExtratoCorrentista depositarValor(Long id, Double valorDeposito) {
-        ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
-        if (valorDeposito > 0) {
-            obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo().
-                    add(new BigDecimal(valorDeposito)));
-            obj.setDescricao("Seu deposito foi realizado com sucesso!");
-        } else {
-            obj.setDescricao("Não foi possivel realizar o deposito!");
-        }
-
-        obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo());
-        return obj;
-    }
-
-    public ExtratoCorrentista sacarValor(Long id, Double valorDeSaque) {
-        ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
-
-        if (valorDeSaque <= 100.0) {
-            obj.setDescricao("Isento de Taxa de Saque");
-
-        } else if (valorDeSaque > 100.00 && valorDeSaque <= 300.0) {
-            BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
-            BigDecimal saldo = obj.getCorrentista().getSaldo();
-            BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(0.4));
-            percentual = percentual.setScale(2, RoundingMode.HALF_EVEN);
-            BigDecimal resultado = valorSaque.add(percentual);
-            resultado = saldo.subtract(resultado);
-            obj.getCorrentista().setSaldo(resultado);
-            obj.setDescricao("Taxa de 0.4%");
-
-        } else if (valorDeSaque > 300.0 && valorDeSaque <= 1500.0) {
-            BigDecimal valorSaque = BigDecimal.valueOf(valorDeSaque);
-            BigDecimal saldo = obj.getCorrentista().getSaldo();
-            BigDecimal percentual = obj.getCorrentista().getSaldo().divide(new BigDecimal(100)).multiply(new BigDecimal(1));
-            percentual = percentual.setScale(2, RoundingMode.HALF_EVEN);
-            BigDecimal resultado = valorSaque.add(percentual);
-            resultado = saldo.subtract(resultado);
-            obj.getCorrentista().setSaldo(resultado);
-            obj.setDescricao("Taxa de 1%");
-
-
-        } else if (obj.getCorrentista().getIsPlanoExclusive().equals(true)) {
-            obj.setDescricao("Isento de Taxa de Saque");
-
-        } else {
-            obj.setDescricao("O Seguinte Correntista Não Possui o Plano Exclusive!");
-        }
-        return obj;
-    }
-
 
     public List<Correntista> findAll() {
 
