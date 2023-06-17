@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,9 @@ public class CorrentistaController {
             summary = "Operação para retornar correntista pelo ID.",
             description = "Operação que irá retornar correntista pelo ID.")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ExtratoCorrentistaDTO> findById(@PathVariable("id") Long id ) {
+    public ResponseEntity<CorrentistaDTO> findById(@PathVariable("id") Long id ) {
 
-        ExtratoCorrentistaDTO dto = correntistaService.findById( id );
+        CorrentistaDTO dto = correntistaService.findById( id );
         return ResponseEntity.ok().body(dto);
     }
 
@@ -48,7 +49,7 @@ public class CorrentistaController {
             summary = "Operação para cadastrar um novo correntista.",
             description = "Operação que irá retornar um novo correntista cadastrado.")
     @PostMapping
-    public ResponseEntity<CorrentistaDTO> insert(@RequestBody CorrentistaDTO correntistaDTO) {
+    public ResponseEntity<CorrentistaDTO> insert(@Valid @RequestBody CorrentistaDTO correntistaDTO) {
         correntistaDTO = correntistaService.insert(correntistaDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(correntistaDTO.getId()).toUri();

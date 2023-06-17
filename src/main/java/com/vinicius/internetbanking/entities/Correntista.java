@@ -2,6 +2,9 @@ package com.vinicius.internetbanking.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -29,7 +32,6 @@ public class Correntista implements Serializable {
     @Column(name = "numero_conta")
     private String numeroConta;
     @Column(name = "data_nascimento", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date dataNascimento;
 
     public Correntista() { }
