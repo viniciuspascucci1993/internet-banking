@@ -1,12 +1,8 @@
 package com.vinicius.internetbanking.controller;
 
 import com.vinicius.internetbanking.dto.CorrentistaDTO;
-import com.vinicius.internetbanking.dto.ExtratoCorrentistaDTO;
 import com.vinicius.internetbanking.entities.Correntista;
-import com.vinicius.internetbanking.entities.ExtratoCorrentista;
 import com.vinicius.internetbanking.services.CorrentistaService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -19,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/correntistas")
+@RequestMapping(value = "/account-holders")
 @Tag(name = "Internet Banking", description = "Simulação Internet Banking")
 public class CorrentistaController {
 

@@ -6,11 +6,17 @@ import com.vinicius.internetbanking.services.customizedannotations.CorrentistaIn
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @CorrentistaInsertValid
 public class CorrentistaDTO implements Serializable {
 
@@ -33,21 +39,8 @@ public class CorrentistaDTO implements Serializable {
     private String numeroConta;
 
     @NotNull(message = "Favor informar a data de aniversário!")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dataNascimento;
-
-    public CorrentistaDTO() {
-    }
-
-    public CorrentistaDTO(Long id, String nome, Boolean isPlanoExclusive, BigDecimal saldo, String numeroConta,
-                          Date dataNascimento) {
-        this.id = id;
-        this.nome = nome;
-        this.isPlanoExclusive = isPlanoExclusive;
-        this.saldo = saldo;
-        this.numeroConta = numeroConta;
-        this.dataNascimento = dataNascimento;
-    }
 
     public CorrentistaDTO(Correntista entitie) {
         this.id = entitie.getId();
@@ -58,27 +51,4 @@ public class CorrentistaDTO implements Serializable {
         this.dataNascimento = entitie.getDataNascimento();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public Boolean getIsPlanoExclusive() {
-        return isPlanoExclusive;
-    }
-
-    public BigDecimal getSaldo() {
-        return saldo;
-    }
-
-    public String getNumeroConta() {
-        return numeroConta;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
 }
