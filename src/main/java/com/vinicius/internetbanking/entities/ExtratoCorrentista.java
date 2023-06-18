@@ -13,12 +13,12 @@ public class ExtratoCorrentista {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "correntista_id")
-    private Correntista correntista;
+    private AccountHolder correntista;
     private String descricao;
 
     public ExtratoCorrentista() { }
 
-    public ExtratoCorrentista(Long id, Correntista correntista, String descricao) {
+    public ExtratoCorrentista(Long id, AccountHolder correntista, String descricao) {
         this.id = id;
         this.correntista = correntista;
         this.descricao = descricao;
@@ -32,11 +32,11 @@ public class ExtratoCorrentista {
         this.id = id;
     }
 
-    public Correntista getCorrentista() {
+    public AccountHolder getCorrentista() {
         return correntista;
     }
 
-    public void setCorrentista(Correntista correntista) {
+    public void setCorrentista(AccountHolder correntista) {
         this.correntista = correntista;
     }
 

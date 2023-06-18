@@ -1,6 +1,6 @@
 package com.vinicius.internetbanking.dto;
 
-import com.vinicius.internetbanking.entities.Correntista;
+import com.vinicius.internetbanking.entities.AccountHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ExtratoCorrentistaDTO {
 
     private Long id;
-    private Correntista correntista;
+    private AccountHolder correntista;
     private String descricao;
 
 }

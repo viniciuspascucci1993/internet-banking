@@ -21,8 +21,8 @@ public class ExtratoCorrentistaController {
             description = "Operação que irá retornar uma lista de correntistas.")
     @GetMapping("/depositValue/{id}/{depositAmount}")
     public ResponseEntity<ExtratoCorrentista> depositarValor(@PathVariable("id") Long id,
-                                                             @PathVariable("valorDeposito") Double valorDeposito) {
-        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.depositarValor(id, valorDeposito);
+                                                             @PathVariable("depositAmount") Double depositAmount) {
+        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.depositarValor(id, depositAmount);
         return ResponseEntity.ok(extratoCorrentista);
     }
 
@@ -31,8 +31,8 @@ public class ExtratoCorrentistaController {
             description = "Operação que irá retornar uma lista de correntistas.")
     @GetMapping("/withdrawValue/{id}/{value}")
     public ResponseEntity<ExtratoCorrentista> sacarValor(@PathVariable("id") Long id,
-                                                         @PathVariable("valorSaque") Double valorSaque) {
-        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.sacarValor(id, valorSaque);
+                                                         @PathVariable("value") Double value) {
+        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.sacarValor(id, value);
         extratoCorrentista.getCorrentista().setIsPlanoExclusive(extratoCorrentista.getCorrentista().getIsPlanoExclusive());
         return ResponseEntity.ok(extratoCorrentista);
     }

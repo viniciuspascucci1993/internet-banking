@@ -3,6 +3,8 @@ package com.vinicius.internetbanking.services;
 import com.vinicius.internetbanking.entities.ExtratoCorrentista;
 import com.vinicius.internetbanking.repositories.CorrentistaRepository;
 import com.vinicius.internetbanking.repositories.ExtratoCorrentistaRepository;
+import com.vinicius.internetbanking.services.exceptions.InvalidDepositException;
+import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,26 +28,26 @@ public class ExtratoCorrentistaService {
                     add(new BigDecimal(valorDeposito)));
             obj.setDescricao("Seu deposito foi realizado com sucesso!");
         } else {
-            obj.setDescricao("Não foi possivel realizar o deposito!");
+            throw new InvalidDepositException("Não foi possível realizar o deposito");
         }
 
         obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo());
         return obj;
     }
 
-    public ExtratoCorrentista sacarValor(Long id, Double valorDeSaque) {
+    public ExtratoCorrentista sacarValor(Long id, Double value) {
         ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
 
-        if (valorDeSaque <= 100.0) {
+        if (value <= 100.0) {
             obj.setDescricao("Isento de Taxa de Saque");
 
-        } else if (valorDeSaque > 100.00 && valorDeSaque <= 300.0) {
-            BigDecimal resultado = calcularDesconto(valorDeSaque, obj.getCorrentista().getSaldo(), 0.4);
+        } else if (value > 100.00 && value <= 300.0) {
+            BigDecimal resultado = calcularDesconto(value, obj.getCorrentista().getSaldo(), 0.4);
             obj.getCorrentista().setSaldo(resultado);
             obj.setDescricao("Taxa de 0.4%");
 
-        } else if (valorDeSaque > 300.0 && valorDeSaque <= 1500.0) {
-            BigDecimal resultado = calcularDesconto(valorDeSaque, obj.getCorrentista().getSaldo(), 1);
+        } else if (value > 300.0 && value <= 1500.0) {
+            BigDecimal resultado = calcularDesconto(value, obj.getCorrentista().getSaldo(), 1);
             obj.getCorrentista().setSaldo(resultado);
             obj.setDescricao("Taxa de 1%");
 
@@ -67,9 +69,6 @@ public class ExtratoCorrentistaService {
         valorDesconto = valorDesconto.setScale(2, RoundingMode.HALF_EVEN);
         valorDesconto = valorDesconto.add(valorSaque);
 
-        if (valorDesconto.doubleValue() > saldoConta.doubleValue()) {
-            throw new RuntimeException("Correntista não possui saldo em conta corrente");
-        }
         BigDecimal resultado = saldoConta.subtract(valorDesconto);
         return resultado;
     }

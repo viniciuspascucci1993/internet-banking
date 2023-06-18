@@ -36,7 +36,7 @@ docker run --name internet-banking -p 8080:8080 -d internet-banking
 mvn clean install -U
 ```
 2 - Importe o seu projeto no eclipse ou intelliJ
-3 - Inicializar o arquivo CalculatorPyhtagorasApplication
+3 - Inicializar o arquivo InternetBankingApplication
 4 - Acesse a api em <a href="http://localhost:8080/swagger-ui/index.html#/" target="_blank">http://localhost:8080/swagger-ui/index.html
 
 ## Colaboradores

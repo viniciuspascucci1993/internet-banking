@@ -1,7 +1,7 @@
 package com.vinicius.internetbanking.services;
 
 import com.vinicius.internetbanking.dto.CorrentistaDTO;
-import com.vinicius.internetbanking.entities.Correntista;
+import com.vinicius.internetbanking.entities.AccountHolder;
 import com.vinicius.internetbanking.repositories.CorrentistaRepository;
 import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -21,20 +21,20 @@ public class CorrentistaService {
     @Transactional(readOnly = true)
     public CorrentistaDTO findById(Long id ) {
 
-        Optional<Correntista> obj = correntistaRepository.findById(id);
-        Correntista entities = obj.orElseThrow(() -> new ResourceNotFoundException("Correntista não econtrado"));
+        Optional<AccountHolder> obj = correntistaRepository.findById(id);
+        AccountHolder entities = obj.orElseThrow(() -> new ResourceNotFoundException("Correntista não econtrado"));
 
         return new CorrentistaDTO(entities);
     }
 
 
-    public List<Correntista> findAll() {
+    public List<AccountHolder> findAll() {
 
         return correntistaRepository.findAll();
     }
     public CorrentistaDTO insert(CorrentistaDTO correntistaDTO ) {
 
-        Correntista entity = new Correntista();
+        AccountHolder entity = new AccountHolder();
         BeanUtils.copyProperties(correntistaDTO, entity);
 
         entity = correntistaRepository.save(entity);

@@ -1,10 +1,6 @@
 package com.vinicius.internetbanking.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_correntista")
-public class Correntista implements Serializable {
+public class AccountHolder implements Serializable {
 
     /**
      * Serial version UID.
@@ -34,9 +30,9 @@ public class Correntista implements Serializable {
     @Column(name = "data_nascimento", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Date dataNascimento;
 
-    public Correntista() { }
+    public AccountHolder() { }
 
-    public Correntista(Long id, String nome, Boolean isPlanoExclusive, BigDecimal saldo, String numeroConta, Date dataNascimento) {
+    public AccountHolder(Long id, String nome, Boolean isPlanoExclusive, BigDecimal saldo, String numeroConta, Date dataNascimento) {
         this.id = id;
         this.nome = nome;
         this.isPlanoExclusive = isPlanoExclusive;
@@ -97,7 +93,7 @@ public class Correntista implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Correntista that = (Correntista) o;
+        AccountHolder that = (AccountHolder) o;
         return id.equals(that.id);
     }
 

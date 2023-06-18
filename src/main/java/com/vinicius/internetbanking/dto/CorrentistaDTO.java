@@ -1,7 +1,7 @@
 package com.vinicius.internetbanking.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.vinicius.internetbanking.entities.Correntista;
+import com.vinicius.internetbanking.entities.AccountHolder;
 import com.vinicius.internetbanking.services.customizedannotations.CorrentistaInsertValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -42,7 +42,7 @@ public class CorrentistaDTO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dataNascimento;
 
-    public CorrentistaDTO(Correntista entitie) {
+    public CorrentistaDTO(AccountHolder entitie) {
         this.id = entitie.getId();
         this.nome = entitie.getNome();
         this.isPlanoExclusive = entitie.getIsPlanoExclusive();

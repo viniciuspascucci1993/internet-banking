@@ -1,5 +1,6 @@
 package com.vinicius.internetbanking.controller.exceptions;
 
+import com.vinicius.internetbanking.services.exceptions.InvalidDepositException;
 import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -47,5 +48,20 @@ public class ResourceExceptionHandler {
         }
 
         return ResponseEntity.status(status).body(validationError);
+    }
+
+    @ExceptionHandler(InvalidDepositException.class)
+    public ResponseEntity<StandardError> invalidDepositoException(InvalidDepositException e , HttpServletRequest request ) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError standardError = new StandardError();
+        standardError.setTimeStamp(Instant.now());
+        standardError.setStatus(status.value());
+        standardError.setError("Invalid Deposito Bad Request");
+        standardError.setMessage(e.getMessage());
+        standardError.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standardError);
     }
 }
