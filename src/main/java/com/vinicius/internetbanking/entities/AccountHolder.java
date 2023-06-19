@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_correntista")
+@Table(name = "tb_account_holder")
 public class AccountHolder implements Serializable {
 
     /**

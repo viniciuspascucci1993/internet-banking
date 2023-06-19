@@ -6,17 +6,25 @@ import com.vinicius.internetbanking.repositories.AccountHolderRepository;
 import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CorrentistaService {
+public class AccountHolderService {
 
     @Autowired
     private AccountHolderRepository accountHolderRepository;
+
+    public Page<AccountHolder> findPage( Integer page, Integer linesPerPage, String orderBy, String direction ) {
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return accountHolderRepository.findAll(pageRequest);
+    }
 
     @Transactional(readOnly = true)
     public AccountHolderDTO findById(Long id ) {
@@ -27,11 +35,6 @@ public class CorrentistaService {
         return new AccountHolderDTO(entities);
     }
 
-
-    public List<AccountHolder> findAll() {
-
-        return accountHolderRepository.findAll();
-    }
     public AccountHolderDTO insert(AccountHolderDTO accountHolderDTO ) {
 
         AccountHolder entity = new AccountHolder();

@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 public class ExtractAccountHolderServiceTest {
 
     @InjectMocks
-    private ExtratoCorrentistaService extratoCorrentistaService;
+    private ExtractAccountHolderService extractAccountHolderService;
 
     @Mock
     private ExtractAccountHolderRepository extractAccountHolderRepository;
@@ -43,7 +43,7 @@ public class ExtractAccountHolderServiceTest {
     public void shouldReturnADepositoValueExtractAccountHolder() {
 
         ExtractAccountHolder depositValue =
-                extratoCorrentistaService.depositarValor(1L, 150.0);
+                extractAccountHolderService.depositarValor(1L, 150.0);
 
         Assertions.assertNotNull(depositValue);
     }
@@ -53,14 +53,14 @@ public class ExtractAccountHolderServiceTest {
         Double errorValueException = -1.0;
 
         Assertions.assertThrows(InvalidDepositException.class, () ->
-                extratoCorrentistaService.depositarValor(1L, errorValueException));
+                extractAccountHolderService.depositarValor(1L, errorValueException));
     }
 
     @Test
     public void shouldReturnAnWitdrawValue() {
 
         ExtractAccountHolder withdrawValue =
-                extratoCorrentistaService.sacarValor(1L, 450.0);
+                extractAccountHolderService.sacarValor(1L, 450.0);
         Assertions.assertNotNull(withdrawValue);
     }
 
@@ -68,7 +68,7 @@ public class ExtractAccountHolderServiceTest {
     public void shouldReturnAnWitdrawValueWhenIsFreeTax() {
 
         ExtractAccountHolder withdrawValue =
-                extratoCorrentistaService.sacarValor(1L, 95.00);
+                extractAccountHolderService.sacarValor(1L, 95.00);
         Assertions.assertNotNull(withdrawValue);
     }
 
@@ -76,7 +76,7 @@ public class ExtractAccountHolderServiceTest {
     public void shouldReturnAnWitdrawValueWhenIsBetweenOneHundredAndThreeHundredValue() {
 
         ExtractAccountHolder withdrawValue =
-                extratoCorrentistaService.sacarValor(1L, 250.00);
+                extractAccountHolderService.sacarValor(1L, 250.00);
         Assertions.assertNotNull(withdrawValue);
         Assertions.assertEquals(13749.00, withdrawValue.getAccountHolder().getBallance().intValue());
     }
@@ -85,7 +85,7 @@ public class ExtractAccountHolderServiceTest {
     public void shouldReturnAnWitdrawValueWhenIsPlanoExclusive() {
 
         ExtractAccountHolder withdrawBalue =
-                extratoCorrentistaService.sacarValor(1L, 2500.00);
+                extractAccountHolderService.sacarValor(1L, 2500.00);
         Assertions.assertNotNull(withdrawBalue);
         Assertions.assertEquals("Isento de Taxa de Saque",
                 withdrawBalue.getDescription());

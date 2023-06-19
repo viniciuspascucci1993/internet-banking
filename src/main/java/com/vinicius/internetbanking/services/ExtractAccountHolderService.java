@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Service
-public class ExtratoCorrentistaService {
+public class ExtractAccountHolderService {
 
     @Autowired
     private AccountHolderRepository accountHolderRepository;

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
@@ -26,33 +27,39 @@ import static org.mockito.Mockito.when;
 public class AccountHolderServiceTest {
 
     @InjectMocks
-    private CorrentistaService correntistaService;
+    private AccountHolderService accountHolderService;
 
     @Mock
     private AccountHolderRepository accountHolderRepository;
 
     private Long existingId;
     private Long nonExistingId;
-    private AccountHolder correntista;
+    private AccountHolder accountHolder;
+
+    private PageImpl<AccountHolder> page;
 
     @BeforeEach
     public void setup() throws Exception {
         existingId = 1L;
         nonExistingId = 1000L;
-        correntista = Factory.createCorrentista();
+        accountHolder = Factory.createCorrentista();
+        page = new PageImpl<AccountHolder>(List.of(accountHolder));
 
-        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
+        when(accountHolderRepository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
+        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(accountHolder);
 
-        when(accountHolderRepository.findById(existingId)).thenReturn(Optional.of(correntista));
+        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(accountHolder);
+
+        when(accountHolderRepository.findById(existingId)).thenReturn(Optional.of(accountHolder));
         when(accountHolderRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
-        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
+        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(accountHolder);
     }
 
     @Test
     public void insertShouldReturnAnObjectAccountHolderDto() {
         AccountHolderDTO correntistaDTO = Factory.createCorrentistaDto();
-        AccountHolderDTO insertCorrentistaDto = correntistaService.insert(correntistaDTO);
+        AccountHolderDTO insertCorrentistaDto = accountHolderService.insert(correntistaDTO);
 
         insertCorrentistaDto.setId(null);
         Assertions.assertNotNull(correntistaDTO.getId());
@@ -61,7 +68,7 @@ public class AccountHolderServiceTest {
     @Test
     public void findByIdShouldReturnAnObjectAccountHolderDtoWhenIdExists() {
 
-        AccountHolderDTO correntistaDTO = correntistaService.findById(existingId);
+        AccountHolderDTO correntistaDTO = accountHolderService.findById(existingId);
 
         Assertions.assertNotNull(correntistaDTO);
         verify(accountHolderRepository, times(1)).findById(existingId);
@@ -71,15 +78,17 @@ public class AccountHolderServiceTest {
     public void findByIdShouldReturnAnObjectAccountHolderDtoWhenNonExistingId() {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () ->
-                correntistaService.findById(nonExistingId));
+                accountHolderService.findById(nonExistingId));
         verify(accountHolderRepository, times(1)).findById(nonExistingId);
     }
 
-    @Test
-    public void findAllShouldReturnAllAccountHoldersoBJECTS() {
-        List<AccountHolder> correntista = correntistaService.findAll();
-        verify(accountHolderRepository, times(1)).findAll();
 
-        Assertions.assertNotNull(correntista);
+    @Test
+    public void findAllPagedShouldReturnPage() {
+
+        Page<AccountHolder> result = accountHolderService.findPage(
+               2, 5,  "ASC", Sort.Direction.ASC.name());
+
+        Assertions.assertNotNull(result);
     }
 }
