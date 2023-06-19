@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExtratoCorrentistaDTO {
+public class ExtractAccountHolderDTO {
 
     private Long id;
     private AccountHolder correntista;

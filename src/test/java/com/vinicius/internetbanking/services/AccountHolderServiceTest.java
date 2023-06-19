@@ -1,8 +1,8 @@
 package com.vinicius.internetbanking.services;
 
-import com.vinicius.internetbanking.dto.CorrentistaDTO;
+import com.vinicius.internetbanking.dto.AccountHolderDTO;
 import com.vinicius.internetbanking.entities.AccountHolder;
-import com.vinicius.internetbanking.repositories.CorrentistaRepository;
+import com.vinicius.internetbanking.repositories.AccountHolderRepository;
 import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import com.vinicius.internetbanking.tests.Factory;
 import org.junit.jupiter.api.Assertions;
@@ -23,13 +23,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
-public class CorrentistaServiceTest {
+public class AccountHolderServiceTest {
 
     @InjectMocks
     private CorrentistaService correntistaService;
 
     @Mock
-    private CorrentistaRepository correntistaRepository;
+    private AccountHolderRepository accountHolderRepository;
 
     private Long existingId;
     private Long nonExistingId;
@@ -41,18 +41,18 @@ public class CorrentistaServiceTest {
         nonExistingId = 1000L;
         correntista = Factory.createCorrentista();
 
-        when(correntistaRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
+        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
 
-        when(correntistaRepository.findById(existingId)).thenReturn(Optional.of(correntista));
-        when(correntistaRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+        when(accountHolderRepository.findById(existingId)).thenReturn(Optional.of(correntista));
+        when(accountHolderRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
-        when(correntistaRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
+        when(accountHolderRepository.save(ArgumentMatchers.any())).thenReturn(correntista);
     }
 
     @Test
     public void insertShouldReturnAnObjectAccountHolderDto() {
-        CorrentistaDTO correntistaDTO = Factory.createCorrentistaDto();
-        CorrentistaDTO insertCorrentistaDto = correntistaService.insert(correntistaDTO);
+        AccountHolderDTO correntistaDTO = Factory.createCorrentistaDto();
+        AccountHolderDTO insertCorrentistaDto = correntistaService.insert(correntistaDTO);
 
         insertCorrentistaDto.setId(null);
         Assertions.assertNotNull(correntistaDTO.getId());
@@ -61,10 +61,10 @@ public class CorrentistaServiceTest {
     @Test
     public void findByIdShouldReturnAnObjectAccountHolderDtoWhenIdExists() {
 
-        CorrentistaDTO correntistaDTO = correntistaService.findById(existingId);
+        AccountHolderDTO correntistaDTO = correntistaService.findById(existingId);
 
         Assertions.assertNotNull(correntistaDTO);
-        verify(correntistaRepository, times(1)).findById(existingId);
+        verify(accountHolderRepository, times(1)).findById(existingId);
     }
 
     @Test
@@ -72,13 +72,13 @@ public class CorrentistaServiceTest {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () ->
                 correntistaService.findById(nonExistingId));
-        verify(correntistaRepository, times(1)).findById(nonExistingId);
+        verify(accountHolderRepository, times(1)).findById(nonExistingId);
     }
 
     @Test
     public void findAllShouldReturnAllAccountHoldersoBJECTS() {
         List<AccountHolder> correntista = correntistaService.findAll();
-        verify(correntistaRepository, times(1)).findAll();
+        verify(accountHolderRepository, times(1)).findAll();
 
         Assertions.assertNotNull(correntista);
     }

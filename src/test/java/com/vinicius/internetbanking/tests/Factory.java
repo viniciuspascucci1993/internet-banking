@@ -1,8 +1,8 @@
 package com.vinicius.internetbanking.tests;
 
-import com.vinicius.internetbanking.dto.CorrentistaDTO;
+import com.vinicius.internetbanking.dto.AccountHolderDTO;
 import com.vinicius.internetbanking.entities.AccountHolder;
-import com.vinicius.internetbanking.entities.ExtratoCorrentista;
+import com.vinicius.internetbanking.entities.ExtractAccountHolder;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,15 +17,15 @@ public class Factory {
         return correntista;
     }
 
-    public static CorrentistaDTO createCorrentistaDto() {
+    public static AccountHolderDTO createCorrentistaDto() {
 
         AccountHolder correntista = createCorrentista();
-        return new CorrentistaDTO(correntista);
+        return new AccountHolderDTO(correntista);
     }
 
-    public static ExtratoCorrentista createExtractAccountHolder() {
-        ExtratoCorrentista extratoCorrentista =
-                new ExtratoCorrentista(1L, createCorrentista(), "Teste de Extrato");
-        return extratoCorrentista;
+    public static ExtractAccountHolder createExtractAccountHolder() {
+        ExtractAccountHolder extractAccountHolder =
+                new ExtractAccountHolder(1L, createCorrentista(), "Teste de Extrato");
+        return extractAccountHolder;
     }
 }

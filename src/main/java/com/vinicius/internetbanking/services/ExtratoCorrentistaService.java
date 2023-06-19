@@ -1,10 +1,9 @@
 package com.vinicius.internetbanking.services;
 
-import com.vinicius.internetbanking.entities.ExtratoCorrentista;
-import com.vinicius.internetbanking.repositories.CorrentistaRepository;
-import com.vinicius.internetbanking.repositories.ExtratoCorrentistaRepository;
+import com.vinicius.internetbanking.entities.ExtractAccountHolder;
+import com.vinicius.internetbanking.repositories.AccountHolderRepository;
+import com.vinicius.internetbanking.repositories.ExtractAccountHolderRepository;
 import com.vinicius.internetbanking.services.exceptions.InvalidDepositException;
-import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,48 +14,48 @@ import java.math.RoundingMode;
 public class ExtratoCorrentistaService {
 
     @Autowired
-    private CorrentistaRepository correntistaRepository;
+    private AccountHolderRepository accountHolderRepository;
 
     @Autowired
-    private ExtratoCorrentistaRepository extratoCorrentistaRepository;
+    private ExtractAccountHolderRepository extractAccountHolderRepository;
 
 
-    public ExtratoCorrentista depositarValor(Long id, Double valorDeposito) {
-        ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
+    public ExtractAccountHolder depositarValor(Long id, Double valorDeposito) {
+        ExtractAccountHolder obj = extractAccountHolderRepository.findById(id).get();
         if (valorDeposito > 0) {
-            obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo().
+            obj.getAccountHolder().setBallance(obj.getAccountHolder().getBallance().
                     add(new BigDecimal(valorDeposito)));
-            obj.setDescricao("Seu deposito foi realizado com sucesso!");
+            obj.setDescription("Seu deposito foi realizado com sucesso!");
         } else {
             throw new InvalidDepositException("Não foi possível realizar o deposito");
         }
 
-        obj.getCorrentista().setSaldo(obj.getCorrentista().getSaldo());
+        obj.getAccountHolder().setBallance(obj.getAccountHolder().getBallance());
         return obj;
     }
 
-    public ExtratoCorrentista sacarValor(Long id, Double value) {
-        ExtratoCorrentista obj = extratoCorrentistaRepository.findById(id).get();
+    public ExtractAccountHolder sacarValor(Long id, Double value) {
+        ExtractAccountHolder obj = extractAccountHolderRepository.findById(id).get();
 
         if (value <= 100.0) {
-            obj.setDescricao("Isento de Taxa de Saque");
+            obj.setDescription("Isento de Taxa de Saque");
 
         } else if (value > 100.00 && value <= 300.0) {
-            BigDecimal resultado = calcularDesconto(value, obj.getCorrentista().getSaldo(), 0.4);
-            obj.getCorrentista().setSaldo(resultado);
-            obj.setDescricao("Taxa de 0.4%");
+            BigDecimal resultado = calcularDesconto(value, obj.getAccountHolder().getBallance(), 0.4);
+            obj.getAccountHolder().setBallance(resultado);
+            obj.setDescription("Taxa de 0.4%");
 
         } else if (value > 300.0 && value <= 1500.0) {
-            BigDecimal resultado = calcularDesconto(value, obj.getCorrentista().getSaldo(), 1);
-            obj.getCorrentista().setSaldo(resultado);
-            obj.setDescricao("Taxa de 1%");
+            BigDecimal resultado = calcularDesconto(value, obj.getAccountHolder().getBallance(), 1);
+            obj.getAccountHolder().setBallance(resultado);
+            obj.setDescription("Taxa de 1%");
 
 
-        } else if (obj.getCorrentista().getIsPlanoExclusive().equals(true)) {
-            obj.setDescricao("Isento de Taxa de Saque");
+        } else if (obj.getAccountHolder().getExclusivePlan().equals(true)) {
+            obj.setDescription("Isento de Taxa de Saque");
 
         } else {
-            obj.setDescricao("O Seguinte Correntista Não Possui o Plano Exclusive!");
+            obj.setDescription("O Seguinte Correntista Não Possui o Plano Exclusive!");
         }
         return obj;
     }

@@ -1,6 +1,6 @@
 package com.vinicius.internetbanking.controller;
 
-import com.vinicius.internetbanking.entities.ExtratoCorrentista;
+import com.vinicius.internetbanking.entities.ExtractAccountHolder;
 import com.vinicius.internetbanking.services.ExtratoCorrentistaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,23 +17,24 @@ public class ExtratoCorrentistaController {
     private ExtratoCorrentistaService extratoCorrentistaService;
 
     @Operation(
-            summary = "Operação para retornar o extrato do correntista com o valor do deposito atualizado.",
-            description = "Operação que irá retornar uma lista de correntistas.")
+            summary = "Operation to deposit a certain amount",
+            description = "Operation to deposit a certain amount")
     @GetMapping("/depositValue/{id}/{depositAmount}")
-    public ResponseEntity<ExtratoCorrentista> depositarValor(@PathVariable("id") Long id,
-                                                             @PathVariable("depositAmount") Double depositAmount) {
-        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.depositarValor(id, depositAmount);
-        return ResponseEntity.ok(extratoCorrentista);
+    public ResponseEntity<ExtractAccountHolder> depositarValor(@PathVariable("id") Long id,
+                                                               @PathVariable("depositAmount") Double depositAmount) {
+        ExtractAccountHolder extractAccountHolder = extratoCorrentistaService.depositarValor(id, depositAmount);
+        return ResponseEntity.ok(extractAccountHolder);
     }
 
     @Operation(
             summary = "Operação para retornar o extrato do correntista com o valor do saque atualizado.",
             description = "Operação que irá retornar uma lista de correntistas.")
     @GetMapping("/withdrawValue/{id}/{value}")
-    public ResponseEntity<ExtratoCorrentista> sacarValor(@PathVariable("id") Long id,
-                                                         @PathVariable("value") Double value) {
-        ExtratoCorrentista extratoCorrentista = extratoCorrentistaService.sacarValor(id, value);
-        extratoCorrentista.getCorrentista().setIsPlanoExclusive(extratoCorrentista.getCorrentista().getIsPlanoExclusive());
-        return ResponseEntity.ok(extratoCorrentista);
+    public ResponseEntity<ExtractAccountHolder> sacarValor(@PathVariable("id") Long id,
+                                                           @PathVariable("value") Double value) {
+        ExtractAccountHolder extractAccountHolder = extratoCorrentistaService.sacarValor(id, value);
+        extractAccountHolder.getAccountHolder().setExclusivePlan(extractAccountHolder.getAccountHolder().
+                getExclusivePlan());
+        return ResponseEntity.ok(extractAccountHolder);
     }
 }

@@ -1,9 +1,8 @@
 package com.vinicius.internetbanking.services;
 
-import com.vinicius.internetbanking.entities.ExtratoCorrentista;
-import com.vinicius.internetbanking.repositories.ExtratoCorrentistaRepository;
+import com.vinicius.internetbanking.entities.ExtractAccountHolder;
+import com.vinicius.internetbanking.repositories.ExtractAccountHolderRepository;
 import com.vinicius.internetbanking.services.exceptions.InvalidDepositException;
-import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import com.vinicius.internetbanking.tests.Factory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,21 +12,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-public class ExtratoCorrentistaServiceTest {
+public class ExtractAccountHolderServiceTest {
 
     @InjectMocks
     private ExtratoCorrentistaService extratoCorrentistaService;
 
     @Mock
-    private ExtratoCorrentistaRepository extratoCorrentistaRepository;
+    private ExtractAccountHolderRepository extractAccountHolderRepository;
 
-    private ExtratoCorrentista extratoCorrentista;
+    private ExtractAccountHolder extratoCorrentista;
 
     private Long existingId;
     private Long nonExistingId;
@@ -37,14 +35,14 @@ public class ExtratoCorrentistaServiceTest {
         existingId = 1L;
         nonExistingId = 1000L;
         extratoCorrentista = Factory.createExtractAccountHolder();
-        when(extratoCorrentistaRepository.findById(existingId)).thenReturn(Optional.of(extratoCorrentista));
-        when(extratoCorrentistaRepository.findById(nonExistingId)).thenReturn(Optional.empty());
+        when(extractAccountHolderRepository.findById(existingId)).thenReturn(Optional.of(extratoCorrentista));
+        when(extractAccountHolderRepository.findById(nonExistingId)).thenReturn(Optional.empty());
     }
 
     @Test
     public void shouldReturnADepositoValueExtractAccountHolder() {
 
-        ExtratoCorrentista depositValue =
+        ExtractAccountHolder depositValue =
                 extratoCorrentistaService.depositarValor(1L, 150.0);
 
         Assertions.assertNotNull(depositValue);
@@ -61,7 +59,7 @@ public class ExtratoCorrentistaServiceTest {
     @Test
     public void shouldReturnAnWitdrawValue() {
 
-        ExtratoCorrentista withdrawValue =
+        ExtractAccountHolder withdrawValue =
                 extratoCorrentistaService.sacarValor(1L, 450.0);
         Assertions.assertNotNull(withdrawValue);
     }
@@ -69,7 +67,7 @@ public class ExtratoCorrentistaServiceTest {
     @Test
     public void shouldReturnAnWitdrawValueWhenIsFreeTax() {
 
-        ExtratoCorrentista withdrawValue =
+        ExtractAccountHolder withdrawValue =
                 extratoCorrentistaService.sacarValor(1L, 95.00);
         Assertions.assertNotNull(withdrawValue);
     }
@@ -77,19 +75,19 @@ public class ExtratoCorrentistaServiceTest {
     @Test
     public void shouldReturnAnWitdrawValueWhenIsBetweenOneHundredAndThreeHundredValue() {
 
-        ExtratoCorrentista withdrawValue =
+        ExtractAccountHolder withdrawValue =
                 extratoCorrentistaService.sacarValor(1L, 250.00);
         Assertions.assertNotNull(withdrawValue);
-        Assertions.assertEquals(13749.00, withdrawValue.getCorrentista().getSaldo().intValue());
+        Assertions.assertEquals(13749.00, withdrawValue.getAccountHolder().getBallance().intValue());
     }
 
     @Test
     public void shouldReturnAnWitdrawValueWhenIsPlanoExclusive() {
 
-        ExtratoCorrentista withdrawBalue =
+        ExtractAccountHolder withdrawBalue =
                 extratoCorrentistaService.sacarValor(1L, 2500.00);
         Assertions.assertNotNull(withdrawBalue);
         Assertions.assertEquals("Isento de Taxa de Saque",
-                withdrawBalue.getDescricao());
+                withdrawBalue.getDescription());
     }
 }

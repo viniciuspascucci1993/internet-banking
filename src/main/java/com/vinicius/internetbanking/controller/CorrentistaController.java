@@ -1,6 +1,6 @@
 package com.vinicius.internetbanking.controller;
 
-import com.vinicius.internetbanking.dto.CorrentistaDTO;
+import com.vinicius.internetbanking.dto.AccountHolderDTO;
 import com.vinicius.internetbanking.entities.AccountHolder;
 import com.vinicius.internetbanking.services.CorrentistaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,18 +23,18 @@ public class CorrentistaController {
     private CorrentistaService correntistaService;
 
     @Operation(
-            summary = "Operação para retornar correntista pelo ID.",
-            description = "Operação que irá retornar correntista pelo ID.")
+            summary = "Operation for return Account Holder By ID.",
+            description = "Operation for return Account Holder By ID.")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CorrentistaDTO> findById(@PathVariable("id") Long id ) {
+    public ResponseEntity<AccountHolderDTO> findById(@PathVariable("id") Long id ) {
 
-        CorrentistaDTO dto = correntistaService.findById( id );
+        AccountHolderDTO dto = correntistaService.findById( id );
         return ResponseEntity.ok().body(dto);
     }
 
     @Operation(
-            summary = "Operação para retornar correntista todos os correntistas.",
-            description = "Operação que irá retornar uma lista de correntistas.")
+            summary = "Operation for return all Account Holders.",
+            description = "Operation for return all Account Holders.")
     @GetMapping
     public ResponseEntity<List<AccountHolder>> findAll() {
         List<AccountHolder> result = correntistaService.findAll();
@@ -42,15 +42,15 @@ public class CorrentistaController {
     }
 
     @Operation(
-            summary = "Operação para cadastrar um novo correntista.",
-            description = "Operação que irá retornar um novo correntista cadastrado.")
+            summary = "Operation for save a new Account Holder",
+            description = "Operation for save a new Account Holder.")
     @PostMapping
-    public ResponseEntity<CorrentistaDTO> insert(@Valid @RequestBody CorrentistaDTO correntistaDTO) {
+    public ResponseEntity<AccountHolderDTO> insert(@Valid @RequestBody AccountHolderDTO accountHolderDTO) {
 
-        correntistaDTO = correntistaService.insert(correntistaDTO);
+        accountHolderDTO = correntistaService.insert(accountHolderDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(correntistaDTO.getId()).toUri();
+                .buildAndExpand(accountHolderDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(correntistaDTO);
+        return ResponseEntity.created(uri).body(accountHolderDTO);
     }
 }

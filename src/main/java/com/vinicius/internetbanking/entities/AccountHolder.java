@@ -19,26 +19,26 @@ public class AccountHolder implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String name;
 
-    @Column(name = "is_plano_exclusive")
-    private Boolean isPlanoExclusive;
-    private BigDecimal saldo;
+    @Column(name = "exclusive_plan")
+    private Boolean exclusivePlan;
+    private BigDecimal ballance;
 
-    @Column(name = "numero_conta")
-    private String numeroConta;
-    @Column(name = "data_nascimento", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Date dataNascimento;
+    @Column(name = "account_number")
+    private String accountNumber;
+    @Column(name = "birth_date", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Date birthDate;
 
     public AccountHolder() { }
 
-    public AccountHolder(Long id, String nome, Boolean isPlanoExclusive, BigDecimal saldo, String numeroConta, Date dataNascimento) {
+    public AccountHolder(Long id, String name, Boolean exclusivePlan, BigDecimal ballance, String accountNumber, Date birthDate) {
         this.id = id;
-        this.nome = nome;
-        this.isPlanoExclusive = isPlanoExclusive;
-        this.saldo = saldo;
-        this.numeroConta = numeroConta;
-        this.dataNascimento = dataNascimento;
+        this.name = name;
+        this.exclusivePlan = exclusivePlan;
+        this.ballance = ballance;
+        this.accountNumber = accountNumber;
+        this.birthDate = birthDate;
     }
 
     public Long getId() {
@@ -49,44 +49,44 @@ public class AccountHolder implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Boolean getIsPlanoExclusive() {
-        return isPlanoExclusive;
+    public Boolean getExclusivePlan() {
+        return exclusivePlan;
     }
 
-    public void setIsPlanoExclusive(Boolean isPlanoExclusive) {
-        this.isPlanoExclusive = isPlanoExclusive;
+    public void setExclusivePlan(Boolean exclusivePlan) {
+        this.exclusivePlan = exclusivePlan;
     }
 
-    public BigDecimal getSaldo() {
-        return saldo;
+    public BigDecimal getBallance() {
+        return ballance;
     }
 
-    public void setSaldo(BigDecimal saldo) {
-        this.saldo = saldo;
+    public void setBallance(BigDecimal ballance) {
+        this.ballance = ballance;
     }
 
-    public String getNumeroConta() {
-        return numeroConta;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setNumeroConta(String numeroConta) {
-        this.numeroConta = numeroConta;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override
