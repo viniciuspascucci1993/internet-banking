@@ -1,8 +1,7 @@
 package com.vinicius.internetbanking.entities;
-
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_extract_account_holder")

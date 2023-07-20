@@ -1,5 +1,7 @@
 package com.vinicius.internetbanking.entities;
 
+
+
 import jakarta.persistence.*;
 
 import java.io.Serializable;

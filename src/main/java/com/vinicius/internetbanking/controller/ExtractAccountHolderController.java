@@ -2,23 +2,17 @@ package com.vinicius.internetbanking.controller;
 
 import com.vinicius.internetbanking.entities.ExtractAccountHolder;
 import com.vinicius.internetbanking.services.ExtractAccountHolderService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/extracts")
-@Tag(name = "Internet Banking", description = "Simulação Internet Banking")
 public class ExtractAccountHolderController {
 
     @Autowired
     private ExtractAccountHolderService extractAccountHolderService;
 
-    @Operation(
-            summary = "Operation to deposit a certain amount",
-            description = "Operation to deposit a certain amount")
     @GetMapping("/depositValue/{id}/{depositAmount}")
     public ResponseEntity<ExtractAccountHolder> depositarValor(@PathVariable("id") Long id,
                                                                @PathVariable("depositAmount") Double depositAmount) {
@@ -26,9 +20,6 @@ public class ExtractAccountHolderController {
         return ResponseEntity.ok(extractAccountHolder);
     }
 
-    @Operation(
-            summary = "Operação para retornar o extrato do correntista com o valor do saque atualizado.",
-            description = "Operação que irá retornar uma lista de correntistas.")
     @GetMapping("/withdrawValue/{id}/{value}")
     public ResponseEntity<ExtractAccountHolder> sacarValor(@PathVariable("id") Long id,
                                                            @PathVariable("value") Double value) {
