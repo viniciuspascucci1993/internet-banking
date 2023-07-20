@@ -1,5 +1,6 @@
 package com.vinicius.internetbanking.repositories;
 
+import com.vinicius.internetbanking.dto.MovementationAccountHolderDTO;
 import com.vinicius.internetbanking.entities.MovementationAccountHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,6 @@ public interface MovementAccountHolderRepository extends JpaRepository<Movementa
      * */
     @Query("SELECT obj FROM MovementationAccountHolder " +
             "obj WHERE obj.date BETWEEN :min AND :max ORDER BY obj.nameAccountHolder DESC")
-    Page<MovementationAccountHolder> findMovementPerDay(LocalDate min, LocalDate max, Pageable pageable);
+    Page<MovementationAccountHolderDTO> findMovementPerDay(LocalDate min, LocalDate max, Pageable pageable);
 
 }
