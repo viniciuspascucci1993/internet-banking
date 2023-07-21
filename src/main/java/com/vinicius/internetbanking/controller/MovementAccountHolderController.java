@@ -31,7 +31,7 @@ public class MovementAccountHolderController {
         return ResponseEntity.created(uri).body(movementationAccountHolderDTO);
     }
 
-    @GetMapping("/movement-day/{idMovement}")
+    @GetMapping("/movement-day")
     public ResponseEntity<Page<MovementationAccountHolderDTO>> findMovementDay(
             @RequestParam(value = "minimumDate", defaultValue = "") String minimumDate,
             @RequestParam(value = "maximumDate", defaultValue = "") String maximumDate,
