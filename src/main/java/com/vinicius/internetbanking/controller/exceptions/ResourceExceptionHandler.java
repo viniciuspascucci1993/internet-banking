@@ -1,5 +1,6 @@
 package com.vinicius.internetbanking.controller.exceptions;
 
+import com.vinicius.internetbanking.services.exceptions.ExpectedDateHasNotYetArrivedException;
 import com.vinicius.internetbanking.services.exceptions.InvalidDepositException;
 import com.vinicius.internetbanking.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,26 @@ import java.time.Instant;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
+
+    private static final String EXPECTED_DATE =
+            "the expected date has not yet arrived, " +
+                    "please wait for the next day for future releases in the movement of the day";
+
+    @ExceptionHandler(ExpectedDateHasNotYetArrivedException.class)
+    public ResponseEntity<StandardError> expectedDateNotArrived(ExpectedDateHasNotYetArrivedException e ,
+                                                                HttpServletRequest request ) {
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        StandardError standardError = new StandardError();
+        standardError.setTimeStamp(Instant.now());
+        standardError.setStatus(status.value());
+        standardError.setError(EXPECTED_DATE);
+        standardError.setMessage(e.getMessage());
+        standardError.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(standardError);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<StandardError> entityNotFoundException(ResourceNotFoundException e , HttpServletRequest request ) {
