@@ -1,8 +1,7 @@
 package com.vinicius.internetbanking.controller;
 
-import com.vinicius.internetbanking.dto.AccountHolderDTO;
-import com.vinicius.internetbanking.dto.MovementationAccountHolderDTO;
-import com.vinicius.internetbanking.services.MovementAccountHolderService;
+import com.vinicius.internetbanking.dto.HistoricExtractDTO;
+import com.vinicius.internetbanking.services.HistoricExtractService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,29 +14,29 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/movements")
-public class MovementAccountHolderController {
+public class HistoricExtractAccountHolderController {
 
     @Autowired
-    private MovementAccountHolderService movementAccountHolderService;
+    private HistoricExtractService historicExtractService;
 
     @PostMapping("/release-movimentation")
-    public ResponseEntity<MovementationAccountHolderDTO> insert(@Valid @RequestBody MovementationAccountHolderDTO
-                                                                            movementationAccountHolderDTO) {
+    public ResponseEntity<HistoricExtractDTO> insert(@Valid @RequestBody HistoricExtractDTO
+                                                                            historicExtractDTO) {
 
-        movementationAccountHolderDTO = movementAccountHolderService.insert(movementationAccountHolderDTO);
+        historicExtractDTO = historicExtractService.insert(historicExtractDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(movementationAccountHolderDTO.getId()).toUri();
+                .buildAndExpand(historicExtractDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(movementationAccountHolderDTO);
+        return ResponseEntity.created(uri).body(historicExtractDTO);
     }
 
     @GetMapping("/movement-day")
-    public ResponseEntity<Page<MovementationAccountHolderDTO>> findMovementDay(
+    public ResponseEntity<Page<HistoricExtractDTO>> findMovementDay(
             @RequestParam(value = "minimumDate", defaultValue = "") String minimumDate,
             @RequestParam(value = "maximumDate", defaultValue = "") String maximumDate,
             Pageable pageable
     ) {
-        return ResponseEntity.ok().body(movementAccountHolderService.
+        return ResponseEntity.ok().body(historicExtractService.
                 findMovementDay(minimumDate, maximumDate, pageable));
     }
 }
