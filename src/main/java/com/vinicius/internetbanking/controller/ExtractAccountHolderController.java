@@ -1,10 +1,16 @@
 package com.vinicius.internetbanking.controller;
 
+import com.vinicius.internetbanking.dto.AccountHolderDTO;
+import com.vinicius.internetbanking.dto.ExtractAccountHolderDTO;
 import com.vinicius.internetbanking.entities.ExtractAccountHolder;
 import com.vinicius.internetbanking.services.ExtractAccountHolderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/extracts")
@@ -12,6 +18,25 @@ public class ExtractAccountHolderController {
 
     @Autowired
     private ExtractAccountHolderService extractAccountHolderService;
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ExtractAccountHolderDTO> findById(@PathVariable("id") Long id ) {
+
+        ExtractAccountHolderDTO dto = extractAccountHolderService.findById( id );
+        return ResponseEntity.ok().body(dto);
+
+    }
+
+    @PostMapping
+    public ResponseEntity<ExtractAccountHolderDTO> insert(@Valid @RequestBody ExtractAccountHolderDTO
+                                                                      extractAccountHolderDTO) {
+
+        extractAccountHolderDTO = extractAccountHolderService.insert(extractAccountHolderDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(extractAccountHolderDTO.getIdExtractAccountHolder()).toUri();
+
+        return ResponseEntity.created(uri).body(extractAccountHolderDTO);
+    }
 
     @GetMapping("/depositValue/{id}/{depositAmount}")
     public ResponseEntity<ExtractAccountHolder> depositarValor(@PathVariable("id") Long id,

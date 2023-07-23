@@ -1,2 +1,0 @@
-INSERT INTO tb_account_holder (name, exclusive_plan, ballance, account_number, birth_date) VALUES ('Vinicius Torres Pascucci', TRUE, 14000.0, '19471-1', TIMESTAMP WITH TIME ZONE '1993-05-01T08:59:00Z')
-INSERT INTO tb_extract_account_holder (account_holder_id, description) VALUES (1, 'Extract of Account Holder 1')

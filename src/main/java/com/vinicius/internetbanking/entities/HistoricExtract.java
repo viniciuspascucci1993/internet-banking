@@ -1,37 +1,75 @@
 package com.vinicius.internetbanking.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_historic_extract")
-public class HistoricExtract {
+public class HistoricExtract implements Serializable {
 
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate futureReleasesAccount;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn( name = "idExtractAccountHolder")
+    private ExtractAccountHolder extractAccountHolder;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date_of_future_releases")
     private LocalDate dateFutureReleases;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "today_date")
     private LocalDate todaysDate;
+
+    @Column(name = "balance_date")
     private BigDecimal balanceDate;
+
+    @Column(name = "bank_insurance")
     private BigDecimal bankInsurance;
+
+    @Column(name = "cell_phone_bill")
     private BigDecimal cellPhoneBill;
+
+    @Column(name = "credit_card")
     private BigDecimal creditCard;
+
+    @Column(name = "several_banking")
     private BigDecimal severalBanking;
+
+    @Column(name = "bank_interest_received")
     private BigDecimal bankInterestReceived;
+
+    @Column(name = "others_transfers")
     private BigDecimal othersTransfers;
+
+    @Column(name = "bank_loan")
     private BigDecimal bankLoan;
     private BigDecimal fuel;
     private BigDecimal ticket;
+    @Column(name = "others_investments")
     private BigDecimal othersInvestments;
+
+    @Column(name = "other_tax_expenses")
     private BigDecimal otherTaxExpenses;
+
+    @Column(name = "clothing_and_acessories")
     private BigDecimal clothingAndAccessories;
 
     public HistoricExtract() { }
 
-    public HistoricExtract(Long id, LocalDate futureReleasesAccount,
+    public HistoricExtract(Long id, ExtractAccountHolder extractAccountHolder,
                            LocalDate dateFutureReleases,
                            LocalDate todaysDate, BigDecimal balanceDate,
                            BigDecimal bankInsurance, BigDecimal cellPhoneBill,
@@ -41,7 +79,7 @@ public class HistoricExtract {
                            BigDecimal othersInvestments, BigDecimal otherTaxExpenses,
                            BigDecimal clothingAndAccessories) {
         this.id = id;
-        this.futureReleasesAccount = futureReleasesAccount;
+        this.extractAccountHolder = extractAccountHolder;
         this.dateFutureReleases = dateFutureReleases;
         this.todaysDate = todaysDate;
         this.balanceDate = balanceDate;
@@ -67,12 +105,12 @@ public class HistoricExtract {
         this.id = id;
     }
 
-    public LocalDate getFutureReleasesAccount() {
-        return futureReleasesAccount;
+    public ExtractAccountHolder getExtractAccountHolder() {
+        return extractAccountHolder;
     }
 
-    public void setFutureReleasesAccount(LocalDate futureReleasesAccount) {
-        this.futureReleasesAccount = futureReleasesAccount;
+    public void setExtractAccountHolder(ExtractAccountHolder extractAccountHolder) {
+        this.extractAccountHolder = extractAccountHolder;
     }
 
     public LocalDate getDateFutureReleases() {

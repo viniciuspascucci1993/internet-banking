@@ -1,32 +1,39 @@
 package com.vinicius.internetbanking.entities;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_extract_account_holder")
 public class ExtractAccountHolder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_extract_account_holder")
+    private Long idExtractAccountHolder;
     @ManyToOne
     @JoinColumn(name = "account_holder_id")
     private AccountHolder accountHolder;
+
+    @OneToMany( mappedBy = "extractAccountHolder", cascade = CascadeType.ALL)
+    private List<HistoricExtract> historicExtractList = new ArrayList<HistoricExtract>();
     private String description;
 
     public ExtractAccountHolder() { }
 
-    public ExtractAccountHolder(Long id, AccountHolder accountHolder, String description) {
-        this.id = id;
+    public ExtractAccountHolder(Long idExtractAccountHolder, AccountHolder accountHolder, String description) {
+        this.idExtractAccountHolder = idExtractAccountHolder;
         this.accountHolder = accountHolder;
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdExtractAccountHolder() {
+        return idExtractAccountHolder;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdExtractAccountHolder(Long idExtractAccountHolder) {
+        this.idExtractAccountHolder = idExtractAccountHolder;
     }
 
     public AccountHolder getAccountHolder() {
@@ -43,5 +50,13 @@ public class ExtractAccountHolder {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<HistoricExtract> getHistoricExtractList() {
+        return historicExtractList;
+    }
+
+    public void setHistoricExtractList(List<HistoricExtract> historicExtractList) {
+        this.historicExtractList = historicExtractList;
     }
 }

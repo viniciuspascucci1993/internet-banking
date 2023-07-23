@@ -16,7 +16,6 @@ import java.time.LocalDate;
 public class HistoricExtractDTO {
 
     private Long id;
-    private LocalDate futureReleasesAccount;
     private LocalDate dateFutureReleases;
     @NotNull(message = "Please provide a today's date!")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -39,7 +38,6 @@ public class HistoricExtractDTO {
 
     public HistoricExtractDTO(HistoricExtract entitie) {
         this.id = entitie.getId();
-        this.futureReleasesAccount = entitie.getFutureReleasesAccount();
         this.dateFutureReleases = entitie.getDateFutureReleases();
         this.todaysDate = entitie.getTodaysDate();
         this.balanceDate = entitie.getBalanceDate();
