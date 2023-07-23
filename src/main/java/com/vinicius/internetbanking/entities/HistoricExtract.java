@@ -12,7 +12,7 @@ public class HistoricExtract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal futureReleasesAccount;
+    private LocalDate futureReleasesAccount;
     private LocalDate dateFutureReleases;
     private LocalDate todaysDate;
     private BigDecimal balanceDate;
@@ -31,7 +31,7 @@ public class HistoricExtract {
 
     public HistoricExtract() { }
 
-    public HistoricExtract(Long id, BigDecimal futureReleasesAccount,
+    public HistoricExtract(Long id, LocalDate futureReleasesAccount,
                            LocalDate dateFutureReleases,
                            LocalDate todaysDate, BigDecimal balanceDate,
                            BigDecimal bankInsurance, BigDecimal cellPhoneBill,
@@ -67,11 +67,11 @@ public class HistoricExtract {
         this.id = id;
     }
 
-    public BigDecimal getFutureReleasesAccount() {
+    public LocalDate getFutureReleasesAccount() {
         return futureReleasesAccount;
     }
 
-    public void setFutureReleasesAccount(BigDecimal futureReleasesAccount) {
+    public void setFutureReleasesAccount(LocalDate futureReleasesAccount) {
         this.futureReleasesAccount = futureReleasesAccount;
     }
 

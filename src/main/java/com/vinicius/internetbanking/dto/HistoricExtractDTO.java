@@ -16,8 +16,7 @@ import java.time.LocalDate;
 public class HistoricExtractDTO {
 
     private Long id;
-    private BigDecimal futureReleasesAccount;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDate futureReleasesAccount;
     private LocalDate dateFutureReleases;
     @NotNull(message = "Please provide a today's date!")
     @JsonFormat(pattern = "yyyy-MM-dd")
